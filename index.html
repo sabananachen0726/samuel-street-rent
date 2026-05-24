@@ -4,15 +4,11 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>COREST 租務管理系統</title>
-    <!-- Tailwind CSS - 採用極簡、乾淨的高級感色調 -->
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
-        /* 隱藏手機瀏覽器預設的 input 內建陰影與圓角 */
         input, select, text-area { -webkit-appearance: none; border-radius: 0.75rem; }
         body { -webkit-tap-highlight-color: transparent; }
-        .hide-scrollbar::-webkit-scrollbar { display: none; }
-        .hide-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
     </style>
 </head>
 <body class="bg-gray-50 text-gray-900 font-sans min-h-screen pb-24 select-none">
@@ -21,7 +17,7 @@
     <div id="login-screen" class="flex items-center justify-center min-h-screen px-6">
         <div class="bg-white p-8 rounded-3xl shadow-sm border border-gray-100 max-w-sm w-full">
             <h2 class="text-2xl font-bold text-center tracking-tight mb-2">租務管理系統</h2>
-            <p class="text-xs text-gray-400 text-center mb-8 uppercase tracking-widest">Mobile Management v2.0</p>
+            <p class="text-xs text-gray-400 text-center mb-8 uppercase tracking-widest">Mobile Management v2.5</p>
             <div class="mb-6">
                 <label class="block text-xs font-semibold text-gray-400 uppercase tracking-wider mb-2">安全密碼驗證</label>
                 <input type="password" id="password-input" class="w-full px-4 py-3.5 bg-gray-50 border border-gray-200 rounded-xl focus:outline-none focus:border-gray-900 focus:bg-white transition text-center text-xl tracking-widest" placeholder="••••">
@@ -31,10 +27,9 @@
         </div>
     </div>
 
-    <!-- ================= 主程式區區塊 (預設隱藏) ================= -->
+    <!-- ================= 主程式區塊 ================= -->
     <div id="main-app" class="hidden">
         
-        <!-- 頂部狀態列 -->
         <header class="bg-white border-b border-gray-100 sticky top-0 z-40 px-4 py-4 flex justify-between items-center">
             <div>
                 <h1 id="page-title" class="text-lg font-bold tracking-tight text-gray-900">填寫收款</h1>
@@ -43,16 +38,15 @@
             <button onclick="logout()" class="text-xs text-gray-400 hover:text-gray-900 px-2 py-1">登出</button>
         </header>
 
-        <!-- 主內容容器 (手機滑動優化) -->
         <main class="px-4 py-6 max-w-md mx-auto">
 
-            <!-- ================= 分頁一：填寫收款 (預設) ================= -->
+            <!-- ================= 分頁一：填寫收款 ================= -->
             <div id="tab-collect" class="tab-content space-y-5">
                 <div class="bg-white p-5 rounded-2xl border border-gray-100 shadow-sm space-y-4">
                     <div>
-                        <label class="block text-xs font-semibold text-gray-400 mb-1.5">選擇房客</label>
+                        <label class="block text-xs font-semibold text-gray-400 mb-1.5">選擇房客 / 物件</label>
                         <select id="collect-tenant" onchange="onCollectTenantChange()" class="w-full px-3 py-3 bg-gray-50 border border-gray-100 rounded-xl text-sm focus:outline-none focus:border-gray-900 focus:bg-white">
-                            <option value="">-- 請選擇房客 --</option>
+                            <option value="">-- 請選擇 --</option>
                         </select>
                     </div>
 
@@ -67,7 +61,7 @@
                                 <option value="1">繳納 1 週</option>
                                 <option value="2">繳納 2 週</option>
                                 <option value="3">繳納 3 週</option>
-                                <option value="4">繳納 4 週</option>
+                                <option value="4">繳納 4 週 (月租)</option>
                                 <option value="custom">自訂金額</option>
                             </select>
                         </div>
@@ -85,81 +79,74 @@
 
             <!-- ================= 分頁二：繳款準時狀況 ================= -->
             <div id="tab-status" class="tab-content space-y-4 hidden">
-                <!-- 總體摘要小卡 -->
                 <div class="grid grid-cols-2 gap-3">
                     <div class="bg-rose-50 border border-rose-100 p-4 rounded-2xl">
-                        <p class="text-[11px] font-medium text-rose-600 uppercase tracking-wider">未繳房客</p>
-                        <p id="unpaid-count" class="text-2xl font-bold text-rose-700 mt-1">0 人</p>
+                        <p class="text-[11px] font-medium text-rose-600 uppercase tracking-wider">未繳項目</p>
+                        <p id="unpaid-count" class="text-2xl font-bold text-rose-700 mt-1">0 筆</p>
                     </div>
                     <div class="bg-emerald-50 border border-emerald-100 p-4 rounded-2xl">
-                        <p class="text-[11px] font-medium text-emerald-600 uppercase tracking-wider">準時房客</p>
-                        <p id="paid-count" class="text-2xl font-bold text-emerald-700 mt-1">0 人</p>
+                        <p class="text-[11px] font-medium text-emerald-600 uppercase tracking-wider">準時項目</p>
+                        <p id="paid-count" class="text-2xl font-bold text-emerald-700 mt-1">0 筆</p>
                     </div>
                 </div>
-
-                <!-- 房客欠費狀態清單 -->
-                <div id="status-container" class="space-y-3">
-                    <!-- 動態載入手機卡片 -->
-                </div>
+                <div id="status-container" class="space-y-3"></div>
             </div>
 
             <!-- ================= 分頁三：歷史查詢 ================= -->
             <div id="tab-history" class="tab-content space-y-4 hidden">
-                <!-- 總收入統計大卡 -->
                 <div class="bg-gray-900 text-white p-5 rounded-2xl shadow-sm relative overflow-hidden">
                     <div class="absolute right-4 bottom-2 opacity-5 text-7xl"><i class="fa-solid fa-coins"></i></div>
-                    <p class="text-xs text-gray-400 uppercase tracking-widest font-medium">過往累積房租總收入</p>
+                    <p class="text-xs text-gray-400 uppercase tracking-widest font-medium">過往累積總收入</p>
                     <p id="total-revenue" class="text-3xl font-extrabold tracking-tight mt-1">$0</p>
                 </div>
-
-                <!-- 歷史明細清單 -->
-                <div id="history-container" class="space-y-2.5">
-                    <!-- 動態載入歷史小卡 -->
-                </div>
+                <div id="history-container" class="space-y-2.5"></div>
             </div>
 
             <!-- ================= 分頁四：房客管理 ================= -->
             <div id="tab-tenants" class="tab-content space-y-5 hidden">
-                <!-- 新增/編輯房客區塊 -->
                 <div class="bg-white p-5 rounded-2xl border border-gray-100 shadow-sm space-y-4">
-                    <h3 id="tenant-form-title" class="text-xs font-bold text-gray-400 uppercase tracking-wider"><i class="fa-solid fa-user-plus mr-1"></i> 新增房客資料</h3>
+                    <h3 id="tenant-form-title" class="text-xs font-bold text-gray-400 uppercase tracking-wider"><i class="fa-solid fa-user-plus mr-1"></i> 新增管理物件</h3>
                     <input type="hidden" id="tenant-id">
                     
                     <div class="space-y-3">
                         <div>
-                            <label class="block text-xs font-medium text-gray-500 mb-1">租客姓名</label>
-                            <input type="text" id="tenant-name" class="w-full px-3 py-2.5 bg-gray-50 border border-gray-100 rounded-xl text-sm focus:outline-none focus:border-gray-900" placeholder="姓名">
+                            <label class="block text-xs font-medium text-gray-500 mb-1">項目名稱 (如房客姓名或倉庫)</label>
+                            <input type="text" id="tenant-name" class="w-full px-3 py-2.5 bg-gray-50 border border-gray-100 rounded-xl text-sm focus:outline-none focus:border-gray-900" placeholder="姓名 / 物件名稱">
                         </div>
                         <div class="grid grid-cols-2 gap-3">
                             <div>
-                                <label class="block text-xs font-medium text-gray-500 mb-1">每週租金 ($)</label>
+                                <label class="block text-xs font-medium text-gray-500 mb-1">收租金額 ($)</label>
                                 <input type="number" id="tenant-rent" class="w-full px-3 py-2.5 bg-gray-50 border border-gray-100 rounded-xl text-sm focus:outline-none focus:border-gray-900" placeholder="$">
                             </div>
                             <div>
-                                <label class="block text-xs font-medium text-gray-500 mb-1">租期開始日</label>
-                                <input type="date" id="tenant-start" class="w-full px-3 py-2.5 bg-gray-50 border border-gray-100 rounded-xl text-sm focus:outline-none focus:border-gray-900">
+                                <label class="block text-xs font-medium text-gray-500 mb-1">收租計費週期</label>
+                                <select id="tenant-period" class="w-full px-3 py-2.5 bg-gray-50 border border-gray-100 rounded-xl text-sm focus:outline-none focus:border-gray-900 bg-white">
+                                    <option value="weekly">每週收一次</option>
+                                    <option value="monthly">每四週收一次 (月租)</option>
+                                </select>
                             </div>
+                        </div>
+                        <div>
+                            <label class="block text-xs font-medium text-gray-500 mb-1">合約開始日期</label>
+                            <input type="date" id="tenant-start" class="w-full px-3 py-2.5 bg-gray-50 border border-gray-100 rounded-xl text-sm focus:outline-none focus:border-gray-900">
                         </div>
                     </div>
 
                     <div class="flex justify-end gap-2 pt-1">
                         <button onclick="clearTenantForm()" id="tenant-cancel-btn" class="hidden px-4 py-2 text-xs font-medium text-gray-500">取消</button>
-                        <button onclick="saveTenant()" class="bg-gray-950 text-white px-5 py-2 rounded-xl text-xs font-medium hover:bg-gray-800">儲存房客</button>
+                        <button onclick="saveTenant()" class="bg-gray-950 text-white px-5 py-2 rounded-xl text-xs font-medium hover:bg-gray-800">儲存物件</button>
                     </div>
                 </div>
 
-                <!-- 目前房客名冊 -->
                 <div class="space-y-2">
-                    <p class="text-xs font-bold text-gray-400 uppercase tracking-wider pl-1 mb-2">現有房客名冊</p>
-                    <div id="tenants-list-container" class="space-y-2.5">
-                        <!-- 動態載入房客名冊 -->
-                    </div>
+                    <p class="text-xs font-bold text-gray-400 uppercase tracking-wider pl-1 mb-2">現有管理名冊</p>
+                    <div id="tenants-list-container" class="space-y-2.5"></div>
                 </div>
             </div>
 
         </main>
 
-        <!-- ================= 底部導覽列 (Bottom App Bar) ================= -->
+        <!-- 底部導覽列 -->
         <div class="fixed bottom-0 left-0 right-0 bg-white/95 backdrop-blur-md border-t border-gray-100 pb-safe z-50">
             <div class="max-w-md mx-auto h-20 flex justify-around items-center px-2">
                 <button onclick="switchTab('collect', '填寫收款')" id="nav-collect" class="flex flex-col items-center gap-1 text-gray-900 font-semibold text-[11px] transition">
@@ -167,7 +154,7 @@
                     <span>填寫收款</span>
                 </button>
                 <button onclick="switchTab('status', '準時狀況')" id="nav-status" class="flex flex-col items-center gap-1 text-gray-400 font-medium text-[11px] transition">
-                    <div class="w-10 h-10 rounded-full text-gray-400 flex items-center justify-center text-sm transition"><i class="fa-solid fa-clock-solid fa-circle-exclamation"></i></div>
+                    <div class="w-10 h-10 rounded-full text-gray-400 flex items-center justify-center text-sm transition"><i class="fa-solid fa-circle-exclamation"></i></div>
                     <span>準時狀況</span>
                 </button>
                 <button onclick="switchTab('history', '歷史查詢')" id="nav-history" class="flex flex-col items-center gap-1 text-gray-400 font-medium text-[11px] transition">
@@ -183,28 +170,27 @@
 
     </div>
 
-    <!-- ================= Firebase SDK 核心資料控制 ================= -->
+    <!-- ================= Firebase 控制邏輯 ================= -->
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-app.js";
         import { getFirestore, collection, addDoc, updateDoc, deleteDoc, doc, onSnapshot, query, orderBy } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore.js";
 
         const firebaseConfig = {
-  apiKey: "AIzaSyDeP9DNQ66vSIxSfobvszadV-pRkT1pSoc",
-  authDomain: "samuel-st-rent.firebaseapp.com",
-  projectId: "samuel-st-rent",
-  storageBucket: "samuel-st-rent.firebasestorage.app",
-  messagingSenderId: "794096659826",
-  appId: "1:794096659826:web:d99d862c67c94ce56f41eb",
-  measurementId: "G-XCH2ZH980C"
+apiKey: "AIzaSyDeP9DNQ66vSIxSfobvszadV-pRkT1pSoc",
+authDomain: "samuel-st-rent.firebaseapp.com",
+projectId: "samuel-st-rent",
+storageBucket: "samuel-st-rent.firebasestorage.app",
+messagingSenderId: "794096659826",
+appId: "1:794096659826:web:d99d862c67c94ce56f41eb",
+measurementId: "G-XCH2ZH980C"
 };
+
         const app = initializeApp(firebaseConfig);
         const db = getFirestore(app);
 
-        // 全局資料暫存
         let globalTenants = [];
         let globalPayments = [];
 
-        // 綁定所有視窗點擊事件
         window.switchTab = switchTab;
         window.checkPassword = checkPassword;
         window.logout = logout;
@@ -218,24 +204,19 @@
         window.deletePayment = deletePayment;
         window.copyReminderText = copyReminderText;
 
-        // 預設日期為今天
         document.getElementById('collect-date').value = new Date().toISOString().split('T')[0];
 
-        // 密碼登入
         function checkPassword() {
             const pwd = document.getElementById('password-input').value;
             if(pwd === '0814') {
-                localStorage.setItem('rent_auth_v2', 'true');
+                localStorage.setItem('rent_auth_v2.5', 'true');
                 showApp();
             } else {
                 document.getElementById('login-error').classList.remove('hidden');
             }
         }
-        function logout() {
-            localStorage.removeItem('rent_auth_v2');
-            location.reload();
-        }
-        if(localStorage.getItem('rent_auth_v2') === 'true') { showApp(); }
+        function logout() { localStorage.removeItem('rent_auth_v2.5'); location.reload(); }
+        if(localStorage.getItem('rent_auth_v2.5') === 'true') { showApp(); }
 
         function showApp() {
             document.getElementById('login-screen').classList.add('hidden');
@@ -243,12 +224,10 @@
             startSync();
         }
 
-        // 切換手機分頁 (優化排版與按鈕樣式)
         function switchTab(tabId, title) {
             document.getElementById('page-title').innerText = title;
             document.querySelectorAll('.tab-content').forEach(el => el.classList.add('hidden'));
             document.getElementById(`tab-${tabId}`).classList.remove('hidden');
-
             const navIds = ['collect', 'status', 'history', 'tenants'];
             navIds.forEach(id => {
                 const btn = document.getElementById(`nav-${id}`);
@@ -257,21 +236,17 @@
                     btn.classList.add('text-gray-900', 'font-semibold');
                     btn.classList.remove('text-gray-400', 'font-medium');
                     iconContainer.classList.add('bg-gray-950', 'text-white', 'shadow-sm');
-                    iconContainer.classList.remove('text-gray-400');
                 } else {
                     btn.classList.remove('text-gray-900', 'font-semibold');
                     btn.classList.add('text-gray-400', 'font-medium');
                     iconContainer.classList.remove('bg-gray-950', 'text-white', 'shadow-sm');
-                    iconContainer.classList.add('text-gray-400');
                 }
             });
             window.scrollTo({ top: 0, behavior: 'smooth' });
         }
 
-        // 即時監聽雲端資料庫
         function startSync() {
-            // 監聽房客
-            onSnapshot(collection(db, "tenants_v2"), (snapshot) => {
+            onSnapshot(collection(db, "tenants_v3"), (snapshot) => {
                 globalTenants = [];
                 snapshot.forEach(doc => globalTenants.push({ id: doc.id, ...doc.data() }));
                 updateTenantDropdown();
@@ -279,8 +254,7 @@
                 renderStatusPage();
             });
 
-            // 監聽收款歷史記錄 (按日期降序)
-            const paymentsQuery = query(collection(db, "payments_v2"), orderBy("collectDate", "desc"));
+            const paymentsQuery = query(collection(db, "payments_v3"), orderBy("collectDate", "desc"));
             onSnapshot(paymentsQuery, (snapshot) => {
                 globalPayments = [];
                 snapshot.forEach(doc => globalPayments.push({ id: doc.id, ...doc.data() }));
@@ -289,19 +263,30 @@
             });
         }
 
-        // 更新收款下拉選單
         function updateTenantDropdown() {
             const select = document.getElementById('collect-tenant');
             const currentValue = select.value;
-            select.innerHTML = '<option value="">-- 請選擇房客 --</option>';
+            select.innerHTML = '<option value="">-- 請選擇房客 / 物件 --</option>';
             globalTenants.forEach(t => {
-                select.innerHTML += `<option value="${t.id}">${t.name}</option>`;
+                const suffix = t.period === 'monthly' ? ' (月租)' : ' (週租)';
+                select.innerHTML += `<option value="${t.id}">${t.name}${suffix}</option>`;
             });
             select.value = currentValue;
         }
 
-        // 選擇房客自動帶入金額提示
         function onCollectTenantChange() {
+            const tenantId = document.getElementById('collect-tenant').value;
+            const cycleSelect = document.getElementById('collect-weeks');
+            
+            if(tenantId) {
+                const tenant = globalTenants.find(t => t.id === tenantId);
+                // 如果是月租型物件，預設週期自動切換為 4 週
+                if (tenant.period === 'monthly') {
+                    cycleSelect.value = '4';
+                } else {
+                    cycleSelect.value = '1';
+                }
+            }
             calculateExpectedRent();
         }
 
@@ -318,19 +303,27 @@
             }
 
             const tenant = globalTenants.find(t => t.id === tenantId);
-            const rent = Number(tenant.rent);
+            const baseRent = Number(tenant.rent);
 
             if(cycle === 'custom') {
-                hint.innerText = `該房客每週租金為: $${rent.toLocaleString()}`;
+                hint.innerText = `設定基礎租金為: $${baseRent.toLocaleString()} / ${tenant.period === 'monthly' ? '四週' : '週'}`;
             } else {
-                const weeks = Number(cycle);
-                const total = rent * weeks;
+                const multiplier = Number(cycle);
+                let total = 0;
+                
+                if (tenant.period === 'monthly') {
+                    // 月租物件：設定的金額就是 4 週總金額，若選繳 4 週就是 1 倍基數，若選 1 週就是 1/4 金額
+                    total = (baseRent / 4) * multiplier;
+                    hint.innerText = `月租折算：$${baseRent.toLocaleString()} (每四週) × ${multiplier}/4 = $${total.toLocaleString()}`;
+                } else {
+                    // 週租物件：基礎金額 × 週數
+                    total = baseRent * multiplier;
+                    hint.innerText = `週租計算：$${baseRent.toLocaleString()} × ${multiplier}週 = $${total.toLocaleString()}`;
+                }
                 amountInput.value = total;
-                hint.innerText = `已自動計算：$${rent.toLocaleString()} × ${weeks}週 = $${total.toLocaleString()}`;
             }
         }
 
-        // 新增收款紀錄
         async function submitPayment() {
             const tenantId = document.getElementById('collect-tenant').value;
             const collectDate = document.getElementById('collect-date').value;
@@ -343,10 +336,18 @@
             }
 
             const tenant = globalTenants.find(t => t.id === tenantId);
-            const weeksPaid = cycle === 'custom' ? (Number(amount) / Number(tenant.rent)) : Number(cycle);
+            let weeksPaid = 0;
+            
+            if (cycle === 'custom') {
+                // 自訂金額時，換算成繳納了幾週的房租
+                const weekRate = tenant.period === 'monthly' ? (Number(tenant.rent) / 4) : Number(tenant.rent);
+                weeksPaid = Number(amount) / weekRate;
+            } else {
+                weeksPaid = Number(cycle);
+            }
 
             try {
-                await addDoc(collection(db, "payments_v2"), {
+                await addDoc(collection(db, "payments_v3"), {
                     tenantId,
                     tenantName: tenant.name,
                     collectDate,
@@ -354,64 +355,62 @@
                     weeksPaid: Number(weeksPaid),
                     createdAt: new Date().getTime()
                 });
-                alert('收款紀錄已寫入！');
+                alert('收款紀錄已成功寫入！');
                 document.getElementById('collect-tenant').value = '';
                 document.getElementById('collect-amount').value = '';
                 document.getElementById('rent-hint').innerText = '';
-            } catch (e) {
-                alert('儲存失敗: ' + e.message);
-            }
+            } catch (e) { alert('儲存失敗: ' + e.message); }
         }
 
-        // 刪除收款紀錄
         async function deletePayment(id) {
-            if(confirm('確定要刪除這筆收款歷史紀錄嗎？')) {
-                await deleteDoc(doc(db, "payments_v2", id));
-            }
+            if(confirm('確定要刪除這筆收款紀錄嗎？')) { await deleteDoc(doc(db, "payments_v3", id)); }
         }
 
-        // ================= 計算核心：自動判定未繳/遲繳週數 =================
+        // ================= 智慧計算：支援月租與週租的欠費判定 =================
         function renderStatusPage() {
             const container = document.getElementById('status-container');
             container.innerHTML = '';
+            let unpaidCount = 0; let paidCount = 0;
+            const today = new Date();
 
             if(globalTenants.length === 0) {
-                container.innerHTML = '<p class="text-center text-sm text-gray-400 py-8">目前無房客名冊資料</p>';
+                container.innerHTML = '<p class="text-center text-sm text-gray-400 py-8">目前無管理物件資料</p>';
                 return;
             }
 
-            const today = new Date();
-            let unpaidCount = 0;
-            let paidCount = 0;
-
             globalTenants.forEach(tenant => {
-                // 1. 計算該房客從開始日到今天，總共過了幾週
                 const startDate = new Date(tenant.startDate);
                 const diffTime = Math.max(0, today - startDate);
-                const weeksElapsed = Math.ceil(diffTime / (1000 * 60 * 60 * 24 * 7)); // 無條件進位算出應繳總週數
+                const weeksElapsed = Math.ceil(diffTime / (1000 * 60 * 60 * 24 * 7)); 
 
-                // 2. 計算歷史紀錄中，該房客總共繳了幾週
                 const tenantPayments = globalPayments.filter(p => p.tenantId === tenant.id);
                 const totalWeeksPaid = tenantPayments.reduce((sum, p) => sum + (p.weeksPaid || 0), 0);
 
-                // 3. 計算目前欠費週數與狀態
                 const oweWeeks = weeksElapsed - totalWeeksPaid;
                 
                 let badge = '';
                 let cardBorder = 'border-gray-100';
                 let actionBtn = '';
 
-                if (oweWeeks > 0) {
+                // 判斷是否欠費（如果是月租，欠費滿 4 週才算欠一個月）
+                if (oweWeeks >= 1) {
                     unpaidCount++;
                     cardBorder = 'border-rose-100 bg-rose-50/20';
-                    badge = `<span class="px-2 py-0.5 rounded text-[11px] font-bold bg-rose-50 text-rose-600">未繳：${oweWeeks} 週 ⚠️</span>`;
-                    actionBtn = `<button onclick="copyReminderText('${tenant.name}', ${tenant.rent}, ${oweWeeks})" class="text-gray-400 hover:text-gray-900 text-xs flex items-center gap-1 bg-white border border-gray-100 px-2.5 py-1 rounded-lg shadow-2xs active:scale-95 transition"><i class="fa-regular fa-copy"></i> 催租</button>`;
+                    if (tenant.period === 'monthly') {
+                        const oweMonths = (oweWeeks / 4).toFixed(1);
+                        badge = `<span class="px-2 py-0.5 rounded text-[11px] font-bold bg-rose-50 text-rose-600">未繳：${oweMonths} 個月 ⚠️</span>`;
+                    } else {
+                        badge = `<span class="px-2 py-0.5 rounded text-[11px] font-bold bg-rose-50 text-rose-600">未繳：${oweWeeks} 週 ⚠️</span>`;
+                    }
+                    
+                    const rentRate = tenant.period === 'monthly' ? (tenant.rent / 4) : tenant.rent;
+                    const oweAmount = Math.round(oweWeeks * rentRate);
+                    actionBtn = `<button onclick="copyReminderText('${tenant.name}', ${oweAmount})" class="text-gray-400 hover:text-gray-900 text-xs flex items-center gap-1 bg-white border border-gray-100 px-2.5 py-1 rounded-lg shadow-2xs transition"><i class="fa-regular fa-copy"></i> 催租</button>`;
                 } else {
                     paidCount++;
-                    badge = `<span class="px-2 py-0.5 rounded text-[11px] font-bold bg-emerald-50 text-emerald-600">已繳清（安全）</span>`;
+                    badge = `<span class="px-2 py-0.5 rounded text-[11px] font-bold bg-emerald-50 text-emerald-600">已繳清</span>`;
                 }
 
-                // 4. 計算房租目前有效覆蓋截止日
                 const coverageDate = new Date(startDate.getTime() + (totalWeeksPaid * 7 * 24 * 60 * 60 * 1000));
                 const coverageStr = coverageDate.toISOString().split('T')[0];
 
@@ -424,30 +423,23 @@
                             </div>
                             <p class="text-[11px] text-gray-400">房租已付清至：<span class="font-medium text-gray-600">${coverageStr}</span></p>
                         </div>
-                        <div>
-                            ${actionBtn}
-                        </div>
+                        <div>${actionBtn}</div>
                     </div>
                 `;
             });
 
-            document.getElementById('unpaid-count').innerText = `${unpaidCount} 人`;
-            document.getElementById('paid-count').innerText = `${paidCount} 人`;
+            document.getElementById('unpaid-count').innerText = `${unpaidCount} 筆`;
+            document.getElementById('paid-count').innerText = `${paidCount} 筆`;
         }
 
-        // 複製便捷催租訊息
-        function copyReminderText(name, rent, weeks) {
-            const txt = `嗨 ${name}，本週對帳時發現房租好像還沒收到喔（目前累計未繳 ${weeks} 週，應繳金額 $${(rent * weeks).toLocaleString()}），再麻煩你有空匯款一下，謝謝你！`;
-            navigator.clipboard.writeText(txt).then(() => {
-                alert(`已複製 ${name} 的催租訊息！可直接貼去傳送。`);
-            });
+        function copyReminderText(name, oweAmount) {
+            const txt = `嗨 ${name}，本期對帳時發現租金好像還沒收到喔（目前累計未繳金額為 $${oweAmount.toLocaleString()}），再麻煩你有空匯款一下，謝謝你！`;
+            navigator.clipboard.writeText(txt).then(() => { alert(`已複製 ${name} 的催租訊息！`); });
         }
 
-        // ================= 歷史頁面渲染 (絕不折行排版) =================
         function renderHistoryPage() {
             const container = document.getElementById('history-container');
             container.innerHTML = '';
-
             let totalRev = 0;
 
             if(globalPayments.length === 0) {
@@ -458,12 +450,14 @@
 
             globalPayments.forEach(p => {
                 totalRev += Number(p.amount);
+                // 把週數漂亮化轉換（例如 4 週就顯示 4 週）
+                const displayWeeks = p.weeksPaid % 4 === 0 ? `${p.weeksPaid} 週` : `${p.weeksPaid.toFixed(1)} 週`;
                 container.innerHTML += `
                     <div class="bg-white px-4 py-3 rounded-xl border border-gray-100 flex justify-between items-center">
                         <div class="space-y-0.5">
                             <div class="flex items-center gap-2">
                                 <span class="font-bold text-sm text-gray-900">${p.tenantName}</span>
-                                <span class="text-[11px] text-gray-400 bg-gray-50 px-1.5 py-0.5 rounded">繳 ${p.weeksPaid} 週</span>
+                                <span class="text-[11px] text-gray-400 bg-gray-50 px-1.5 py-0.5 rounded">入帳 ${displayWeeks}</span>
                             </div>
                             <p class="text-[11px] text-gray-400">收款日: ${p.collectDate}</p>
                         </div>
@@ -474,11 +468,9 @@
                     </div>
                 `;
             });
-
             document.getElementById('total-revenue').innerText = `$${totalRev.toLocaleString()}`;
         }
 
-        // ================= 房客管理頁面渲染 =================
         function renderTenantsPage() {
             const container = document.getElementById('tenants-list-container');
             container.innerHTML = '';
@@ -489,14 +481,15 @@
             }
 
             globalTenants.forEach(t => {
+                const periodText = t.period === 'monthly' ? '每四週' : '每週';
                 container.innerHTML += `
                     <div class="bg-white p-3.5 rounded-xl border border-gray-100 flex justify-between items-center">
                         <div>
                             <p class="font-bold text-sm text-gray-900">${t.name}</p>
-                            <p class="text-[11px] text-gray-400 mt-0.5">每週 $${Number(t.rent).toLocaleString()} • ${t.startDate} 開始</p>
+                            <p class="text-[11px] text-gray-400 mt-0.5">${periodText} $${Number(t.rent).toLocaleString()} • ${t.startDate} 開始</p>
                         </div>
                         <div class="flex gap-2">
-                            <button onclick="editTenant('${t.id}', '${t.name}', ${t.rent}, '${t.startDate}')" class="text-gray-400 hover:text-gray-900 px-2 py-1 text-xs bg-gray-50 rounded-lg"><i class="fa-regular fa-pen-to-square"></i></button>
+                            <button onclick="editTenant('${t.id}', '${t.name}', ${t.rent}, '${t.startDate}', '${t.period || 'weekly'}')" class="text-gray-400 hover:text-gray-900 px-2 py-1 text-xs bg-gray-50 rounded-lg"><i class="fa-regular fa-pen-to-square"></i></button>
                             <button onclick="deleteTenant('${t.id}')" class="text-gray-400 hover:text-rose-600 px-2 py-1 text-xs bg-gray-50 rounded-lg"><i class="fa-regular fa-trash-can"></i></button>
                         </div>
                     </div>
@@ -504,35 +497,32 @@
             });
         }
 
-        // 儲存/修改 房客資料
         async function saveTenant() {
             const id = document.getElementById('tenant-id').value;
             const name = document.getElementById('tenant-name').value.trim();
             const rent = document.getElementById('tenant-rent').value;
             const startDate = document.getElementById('tenant-start').value;
+            const period = document.getElementById('tenant-period').value;
 
             if(!name || !rent || !startDate) {
-                alert('房客名冊欄位皆為必填！');
+                alert('所有欄位皆為必填！');
                 return;
             }
 
-            const data = { name, rent: Number(rent), startDate };
+            const data = { name, rent: Number(rent), startDate, period };
 
-            if(id) {
-                await updateDoc(doc(db, "tenants_v2", id), data);
-            } else {
-                await addDoc(collection(db, "tenants_v2"), data);
-            }
+            if(id) { await updateDoc(doc(db, "tenants_v3", id), data); }
+            else { await addDoc(collection(db, "tenants_v3"), data); }
             clearTenantForm();
         }
 
-        function editTenant(id, name, rent, start) {
+        function editTenant(id, name, rent, start, period) {
             document.getElementById('tenant-id').value = id;
             document.getElementById('tenant-name').value = name;
             document.getElementById('tenant-rent').value = rent;
             document.getElementById('tenant-start').value = start;
-
-            document.getElementById('tenant-form-title').innerText = "編輯房客資料";
+            document.getElementById('tenant-period').value = period || 'weekly';
+            document.getElementById('tenant-form-title').innerText = "編輯管理資料";
             document.getElementById('tenant-cancel-btn').classList.remove('hidden');
         }
 
@@ -541,15 +531,13 @@
             document.getElementById('tenant-name').value = '';
             document.getElementById('tenant-rent').value = '';
             document.getElementById('tenant-start').value = '';
-
+            document.getElementById('tenant-period').value = 'weekly';
             document.getElementById('tenant-form-title').innerText = "新增房客資料";
             document.getElementById('tenant-cancel-btn').classList.add('hidden');
         }
 
         async function deleteTenant(id) {
-            if(confirm('刪除房客將不會刪除他的過往繳費紀錄，確定要刪除該房客名單嗎？')) {
-                await deleteDoc(doc(db, "tenants_v2", id));
-            }
+            if(confirm('確定要刪除此項目嗎？')) { await deleteDoc(doc(db, "tenants_v3", id)); }
         }
     </script>
 </body>
