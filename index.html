@@ -1,0 +1,561 @@
+<!DOCTYPE html>
+
+<html lang="zh-TW">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>收租記錄系統</title>
+
+    <!-- Tailwind CSS 畫風維持乾淨、極簡 -->
+
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <!-- FontAwesome 圖標 -->
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+</head>
+
+<body class="bg-gray-50 text-gray-800 font-sans min-h-screen">
+
+
+
+    <!-- 1. 登入區塊 -->
+
+    <div id="login-screen" class="flex items-center justify-center min-h-screen px-4">
+
+        <div class="bg-white p-8 rounded-2xl shadow-sm border border-gray-100 max-w-sm w-full">
+
+            <h2 class="text-2xl font-bold text-center tracking-tight mb-6">收租管理系統</h2>
+
+            <div class="mb-4">
+
+                <label class="block text-xs font-semibold text-gray-400 uppercase tracking-wider mb-2">請輸入密碼</label>
+
+                <input type="password" id="password-input" class="w-full px-4 py-3 border border-gray-200 rounded-xl focus:outline-none focus:border-gray-900 transition" placeholder="••••">
+
+                <p id="login-error" class="text-red-500 text-sm mt-2 hidden">密碼錯誤，請再試一次</p>
+
+            </div>
+
+            <button onclick="checkPassword()" class="w-full bg-gray-950 text-white py-3 rounded-xl font-medium hover:bg-gray-800 transition">登入系統</button>
+
+        </div>
+
+    </div>
+
+
+
+    <!-- 2. 主程式區塊 (預設隱藏) -->
+
+    <div id="main-app" class="hidden">
+
+        <!-- 導覽列 -->
+
+        <nav class="bg-white border-b border-gray-100 sticky top-0 z-50">
+
+            <div class="max-w-6xl mx-auto px-4 h-16 flex items-center justify-between">
+
+                <h1 class="text-lg font-bold tracking-tight flex items-center gap-2">
+
+                    <i class="fa-solid fa-wallet text-gray-400"></i> 收租明細
+
+                </h1>
+
+                <button onclick="logout()" class="text-sm font-medium text-gray-400 hover:text-gray-900 transition">登出</button>
+
+            </div>
+
+        </nav>
+
+
+
+        <main class="max-w-6xl mx-auto px-4 py-8">
+
+            <!-- 新增房客表單 -->
+
+            <div class="bg-white p-6 rounded-2xl shadow-sm border border-gray-100 mb-8">
+
+                <h3 class="text-base font-semibold mb-4 flex items-center gap-2">
+
+                    <i class="fa-solid fa-user-plus text-gray-400"></i> 新增 / 編輯房客週租記錄
+
+                </h3>
+
+                <input type="hidden" id="edit-id">
+
+                <div class="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-6 gap-4">
+
+                    <div>
+
+                        <label class="block text-xs font-medium text-gray-500 mb-1">租客姓名</label>
+
+                        <input type="text" id="tenant-name" class="w-full px-3 py-2 border border-gray-200 rounded-xl focus:outline-none focus:border-gray-900" placeholder="名字">
+
+                    </div>
+
+                    <div>
+
+                        <label class="block text-xs font-medium text-gray-500 mb-1">每週租金</label>
+
+                        <input type="number" id="weekly-rent" class="w-full px-3 py-2 border border-gray-200 rounded-xl focus:outline-none focus:border-gray-900" placeholder="$">
+
+                    </div>
+
+                    <div>
+
+                        <label class="block text-xs font-medium text-gray-500 mb-1">入住日期</label>
+
+                        <input type="date" id="move-in-date" class="w-full px-3 py-2 border border-gray-200 rounded-xl focus:outline-none focus:border-gray-900">
+
+                    </div>
+
+                    <div>
+
+                        <label class="block text-xs font-medium text-gray-500 mb-1">本次繳費日期</label>
+
+                        <input type="date" id="due-date" class="w-full px-3 py-2 border border-gray-200 rounded-xl focus:outline-none focus:border-gray-900">
+
+                    </div>
+
+                    <div>
+
+                        <label class="block text-xs font-medium text-gray-500 mb-1">繳納狀態</label>
+
+                        <select id="payment-status" class="w-full px-3 py-2 border border-gray-200 rounded-xl focus:outline-none focus:border-gray-900 bg-white">
+
+                            <option value="未繳">未繳</option>
+
+                            <option value="已繳">已繳</option>
+
+                        </select>
+
+                    </div>
+
+                    <div>
+
+                        <label class="block text-xs font-medium text-gray-500 mb-1">備註說明</label>
+
+                        <input type="text" id="remark" class="w-full px-3 py-2 border border-gray-200 rounded-xl focus:outline-none focus:border-gray-900" placeholder="可不填">
+
+                    </div>
+
+                </div>
+
+                <div class="mt-4 flex justify-end gap-2">
+
+                    <button onclick="clearForm()" id="cancel-btn" class="hidden px-4 py-2 text-sm font-medium text-gray-500 hover:text-gray-900 transition">取消編輯</button>
+
+                    <button onclick="saveTenant()" id="save-btn" class="bg-gray-950 text-white px-5 py-2 rounded-xl text-sm font-medium hover:bg-gray-800 transition">儲存資料</button>
+
+                </div>
+
+            </div>
+
+
+
+            <!-- 列表清單 -->
+
+            <div class="bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden">
+
+                <div class="overflow-x-auto">
+
+                    <table class="w-full text-left border-collapse">
+
+                        <thead>
+
+                            <tr class="bg-gray-50 border-b border-gray-100">
+
+                                <th class="p-4 text-xs font-semibold text-gray-400 uppercase tracking-wider">租客</th>
+
+                                <th class="p-4 text-xs font-semibold text-gray-400 uppercase tracking-wider">每週租金</th>
+
+                                <th class="p-4 text-xs font-semibold text-gray-400 uppercase tracking-wider">入住日期</th>
+
+                                <th class="p-4 text-xs font-semibold text-gray-400 uppercase tracking-wider">繳費截止日</th>
+
+                                <th class="p-4 text-xs font-semibold text-gray-400 uppercase tracking-wider">狀態</th>
+
+                                <th class="p-4 text-xs font-semibold text-gray-400 uppercase tracking-wider">備註</th>
+
+                                <th class="p-4 text-xs font-semibold text-gray-400 uppercase tracking-wider text-right">操作</th>
+
+                            </tr>
+
+                        </thead>
+
+                        <tbody id="tenant-list" class="divide-y divide-gray-100">
+
+                            <!-- 資料動態載入 -->
+
+                        </tbody>
+
+                    </table>
+
+                </div>
+
+            </div>
+
+        </main>
+
+    </div>
+
+
+
+    <!-- 載入 Firebase 核心與 Firestore SDK (v9 模組化版本) -->
+
+    <script type="module">
+
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-app.js";
+
+        import { getFirestore, collection, addDoc, getDocs, updateDoc, deleteDoc, doc, onSnapshot } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore.js";
+
+
+
+        const firebaseConfig = {
+
+  apiKey: "AIzaSyDeP9DNQ66vSIxSfobvszadV-pRkT1pSoc",
+
+  authDomain: "samuel-st-rent.firebaseapp.com",
+
+  projectId: "samuel-st-rent",
+
+  storageBucket: "samuel-st-rent.firebasestorage.app",
+
+  messagingSenderId: "794096659826",
+
+  appId: "1:794096659826:web:d99d862c67c94ce56f41eb",
+
+  measurementId: "G-XCH2ZH980C"
+
+};
+
+
+
+
+
+        // 初始化 Firebase
+
+        const app = initializeApp(firebaseConfig);
+
+        const db = getFirestore(app);
+
+        const tenantsCollection = collection(db, "tenants");
+
+
+
+        // 全局綁定函數讓 HTML 的 onclick 可以觸發
+
+        window.saveTenant = saveTenant;
+
+        window.deleteTenant = deleteTenant;
+
+        window.editTenant = editTenant;
+
+        window.clearForm = clearForm;
+
+        window.checkPassword = checkPassword;
+
+        window.logout = logout;
+
+
+
+        // 檢查密碼
+
+        function checkPassword() {
+
+            const pwd = document.getElementById('password-input').value;
+
+            if(pwd === '0814') {
+
+                localStorage.setItem('rent_auth', 'true');
+
+                showApp();
+
+            } else {
+
+                document.getElementById('login-error').classList.remove('hidden');
+
+            }
+
+        }
+
+
+
+        function logout() {
+
+            localStorage.removeItem('rent_auth');
+
+            location.reload();
+
+        }
+
+
+
+        // 頁面載入檢查登入狀態
+
+        if(localStorage.getItem('rent_auth') === 'true') {
+
+            showApp();
+
+        }
+
+
+
+        function showApp() {
+
+            document.getElementById('login-screen').classList.add('hidden');
+
+            document.getElementById('main-app').classList.remove('hidden');
+
+            listenToData(); // 開始監聽資料庫
+
+        }
+
+
+
+        // 即時監聽資料庫變化
+
+        function listenToData() {
+
+            onSnapshot(tenantsCollection, (snapshot) => {
+
+                const listData = [];
+
+                snapshot.forEach((doc) => {
+
+                    listData.push({ id: doc.id, ...doc.data() });
+
+                });
+
+                renderTable(listData);
+
+            });
+
+        }
+
+
+
+        // 渲染表格與自動判斷「遲繳」
+
+        function renderTable(data) {
+
+            const tbody = document.getElementById('tenant-list');
+
+            tbody.innerHTML = '';
+
+            
+
+            if(data.length === 0) {
+
+                tbody.innerHTML = `<tr><td colspan="7" class="p-8 text-sm text-gray-400 text-center">目前沒有記錄，請從上方新增。</td></tr>`;
+
+                return;
+
+            }
+
+
+
+            const todayStr = new Date().toISOString().split('T')[0]; // 取得今天日期字串 (YYYY-MM-DD)
+
+
+
+            data.forEach(item => {
+
+                let statusBadge = '';
+
+                
+
+                // 核心邏輯：如果狀態是未繳，且今天大於繳費日期，自動判定為遲繳
+
+                if (item.status === '已繳') {
+
+                    statusBadge = `<span class="inline-flex items-center gap-1 px-2.5 py-1 text-xs font-medium bg-emerald-50 text-emerald-700 rounded-md"><span class="w-1.5 h-1.5 rounded-full bg-emerald-500"></span>已繳</span>`;
+
+                } else if (item.status === '未繳' && todayStr > item.dueDate) {
+
+                    statusBadge = `<span class="inline-flex items-center gap-1 px-2.5 py-1 text-xs font-medium bg-rose-50 text-rose-700 rounded-md animate-pulse"><span class="w-1.5 h-1.5 rounded-full bg-rose-500"></span>遲繳 ⚠️</span>`;
+
+                } else {
+
+                    statusBadge = `<span class="inline-flex items-center gap-1 px-2.5 py-1 text-xs font-medium bg-amber-50 text-amber-700 rounded-md"><span class="w-1.5 h-1.5 rounded-full bg-amber-500"></span>未繳</span>`;
+
+                }
+
+
+
+                tbody.innerHTML += `
+
+                    <tr class="hover:bg-gray-50/50 transition">
+
+                        <td class="p-4 text-sm font-semibold text-gray-900">${item.name}</td>
+
+                        <td class="p-4 text-sm text-gray-600">$${Number(item.weeklyRent).toLocaleString()}</td>
+
+                        <td class="p-4 text-sm text-gray-500">${item.moveInDate || '-'}</td>
+
+                        <td class="p-4 text-sm font-medium text-gray-700">${item.dueDate}</td>
+
+                        <td class="p-4 text-sm">${statusBadge}</td>
+
+                        <td class="p-4 text-sm text-gray-400 max-w-xs truncate" title="${item.remark || ''}">${item.remark || '-'}</td>
+
+                        <td class="p-4 text-sm text-right space-x-2">
+
+                            <button onclick="editTenant('${item.id}', '${item.name}', '${item.weeklyRent}', '${item.moveInDate}', '${item.dueDate}', '${item.status}', '${item.remark || ''}')" class="text-gray-400 hover:text-gray-900 transition"><i class="fa-regular fa-pen-to-square"></i></button>
+
+                            <button onclick="deleteTenant('${item.id}')" class="text-gray-400 hover:text-rose-600 transition"><i class="fa-regular fa-trash-can"></i></button>
+
+                        </td>
+
+                    </tr>
+
+                `;
+
+            });
+
+        }
+
+
+
+        // 新增或更新資料
+
+        async function saveTenant() {
+
+            const id = document.getElementById('edit-id').value;
+
+            const name = document.getElementById('tenant-name').value.trim();
+
+            const weeklyRent = document.getElementById('weekly-rent').value;
+
+            const moveInDate = document.getElementById('move-in-date').value;
+
+            const dueDate = document.getElementById('due-date').value;
+
+            const status = document.getElementById('payment-status').value;
+
+            const remark = document.getElementById('remark').value.trim();
+
+
+
+            if(!name || !weeklyRent || !dueDate) {
+
+                alert('請填寫姓名、週租金與繳費日期！');
+
+                return;
+
+            }
+
+
+
+            const data = { name, weeklyRent, moveInDate, dueDate, status, remark };
+
+
+
+            try {
+
+                if(id) {
+
+                    // 更新舊資料
+
+                    const docRef = doc(db, "tenants", id);
+
+                    await updateDoc(docRef, data);
+
+                } else {
+
+                    // 新增資料
+
+                    await addDoc(tenantsCollection, data);
+
+                }
+
+                clearForm();
+
+            } catch (error) {
+
+                alert("儲存失敗: " + error.message);
+
+            }
+
+        }
+
+
+
+        // 刪除資料
+
+        async function deleteTenant(id) {
+
+            if(confirm('確定要刪除這筆記錄嗎？')) {
+
+                await deleteDoc(doc(db, "tenants", id));
+
+            }
+
+        }
+
+
+
+        // 帶入編輯資料
+
+        function editTenant(id, name, rent, moveIn, due, status, remark) {
+
+            document.getElementById('edit-id').value = id;
+
+            document.getElementById('tenant-name').value = name;
+
+            document.getElementById('weekly-rent').value = rent;
+
+            document.getElementById('move-in-date').value = moveIn === 'undefined' ? '' : moveIn;
+
+            document.getElementById('due-date').value = due;
+
+            document.getElementById('payment-status').value = status;
+
+            document.getElementById('remark').value = remark === 'undefined' ? '' : remark;
+
+
+
+            document.getElementById('save-btn').innerText = "更新資料";
+
+            document.getElementById('cancel-btn').classList.remove('hidden');
+
+        }
+
+
+
+        // 清空表單
+
+        function clearForm() {
+
+            document.getElementById('edit-id').value = '';
+
+            document.getElementById('tenant-name').value = '';
+
+            document.getElementById('weekly-rent').value = '';
+
+            document.getElementById('move-in-date').value = '';
+
+            document.getElementById('due-date').value = '';
+
+            document.getElementById('payment-status').value = '未繳';
+
+            document.getElementById('remark').value = '';
+
+
+
+            document.getElementById('save-btn').innerText = "儲存資料";
+
+            document.getElementById('cancel-btn').classList.add('hidden');
+
+        }
+
+    </script>
+
+</body>
+
+</html>
