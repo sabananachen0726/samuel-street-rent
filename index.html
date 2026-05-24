@@ -1,0 +1,334 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+  <meta http-equiv="Content-Style-Type" content="text/css">
+  <title></title>
+  <meta name="Generator" content="Cocoa HTML Writer">
+  <meta name="CocoaVersion" content="2113.65">
+  <style type="text/css">
+    p.p1 {margin: 0.0px 0.0px 0.0px 0.0px; font: 12.0px Helvetica; color: #000000; -webkit-text-stroke: #000000}
+    p.p2 {margin: 0.0px 0.0px 0.0px 0.0px; font: 14.0px Times; color: #061539; color: rgba(6, 21, 57, 0.7); -webkit-text-stroke: rgba(6, 21, 57, 0.7)}
+    p.p3 {margin: 0.0px 0.0px 0.0px 0.0px; font: 14.0px Times; color: #155b23; -webkit-text-stroke: #155b23}
+    p.p4 {margin: 0.0px 0.0px 0.0px 0.0px; font: 12.0px Helvetica; color: #000000; -webkit-text-stroke: #000000; min-height: 14.0px}
+    p.p5 {margin: 0.0px 0.0px 0.0px 0.0px; font: 12.0px 'PingFang TC'; color: #000000; -webkit-text-stroke: #000000}
+    span.s1 {font-kerning: none}
+    span.s2 {font: 12.0px 'PingFang TC'; font-kerning: none}
+    span.s3 {font: 12.0px Helvetica; font-kerning: none; color: #000000; -webkit-text-stroke: 0px #000000}
+    span.s4 {font-kerning: none; color: #0d3ec5; -webkit-text-stroke: 0px #0d3ec5}
+    span.s5 {font-kerning: none; color: rgba(6, 21, 57, 0.7); -webkit-text-stroke: 0px rgba(6, 21, 57, 0.7)}
+    span.s6 {font-kerning: none; color: #155b23; -webkit-text-stroke: 0px #155b23}
+    span.s7 {font: 12.0px Helvetica; font-kerning: none}
+    span.s8 {font: 12.0px 'Apple Color Emoji'; font-kerning: none}
+  </style>
+</head>
+<body>
+<p class="p1"><span class="s1">&lt;!DOCTYPE html&gt;</span></p>
+<p class="p1"><span class="s1">&lt;html lang="zh-TW"&gt;</span></p>
+<p class="p1"><span class="s1">&lt;head&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>&lt;meta charset="UTF-8"&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>&lt;meta name="viewport" content="width=device-width, initial-scale=1.0"&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>&lt;title&gt;</span><span class="s2">收租記錄系統</span><span class="s1">&lt;/title&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>&lt;!-- Tailwind CSS </span><span class="s2">畫風維持乾淨、極簡</span><span class="s1"> --&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>&lt;script src="https://cdn.tailwindcss.com"&gt;&lt;/script&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>&lt;!-- FontAwesome </span><span class="s2">圖標</span><span class="s1"> --&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>&lt;link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"&gt;</span></p>
+<p class="p1"><span class="s1">&lt;/head&gt;</span></p>
+<p class="p1"><span class="s1">&lt;body class="bg-gray-50 text-gray-800 font-sans min-h-screen"&gt;</span></p>
+<p class="p1"><span class="s1"><br>
+</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>&lt;!-- 1. </span><span class="s2">登入區塊</span><span class="s1"> --&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>&lt;div id="login-screen" class="flex items-center justify-center min-h-screen px-4"&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>&lt;div class="bg-white p-8 rounded-2xl shadow-sm border border-gray-100 max-w-sm w-full"&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>&lt;h2 class="text-2xl font-bold text-center tracking-tight mb-6"&gt;</span><span class="s2">收租管理系統</span><span class="s1">&lt;/h2&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>&lt;div class="mb-4"&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                </span>&lt;label class="block text-xs font-semibold text-gray-400 uppercase tracking-wider mb-2"&gt;</span><span class="s2">請輸入密碼</span><span class="s1">&lt;/label&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                </span>&lt;input type="password" id="password-input" class="w-full px-4 py-3 border border-gray-200 rounded-xl focus:outline-none focus:border-gray-900 transition" placeholder="••••"&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                </span>&lt;p id="login-error" class="text-red-500 text-sm mt-2 hidden"&gt;</span><span class="s2">密碼錯誤，請再試一次</span><span class="s1">&lt;/p&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>&lt;/div&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>&lt;button onclick="checkPassword()" class="w-full bg-gray-950 text-white py-3 rounded-xl font-medium hover:bg-gray-800 transition"&gt;</span><span class="s2">登入系統</span><span class="s1">&lt;/button&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>&lt;/div&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>&lt;/div&gt;</span></p>
+<p class="p1"><span class="s1"><br>
+</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>&lt;!-- 2. </span><span class="s2">主程式區塊</span><span class="s1"> (</span><span class="s2">預設隱藏</span><span class="s1">) --&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>&lt;div id="main-app" class="hidden"&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>&lt;!-- </span><span class="s2">導覽列</span><span class="s1"> --&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>&lt;nav class="bg-white border-b border-gray-100 sticky top-0 z-50"&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>&lt;div class="max-w-6xl mx-auto px-4 h-16 flex items-center justify-between"&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                </span>&lt;h1 class="text-lg font-bold tracking-tight flex items-center gap-2"&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                    </span>&lt;i class="fa-solid fa-wallet text-gray-400"&gt;&lt;/i&gt; </span><span class="s2">收租明細</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                </span>&lt;/h1&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                </span>&lt;button onclick="logout()" class="text-sm font-medium text-gray-400 hover:text-gray-900 transition"&gt;</span><span class="s2">登出</span><span class="s1">&lt;/button&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>&lt;/div&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>&lt;/nav&gt;</span></p>
+<p class="p1"><span class="s1"><br>
+</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>&lt;main class="max-w-6xl mx-auto px-4 py-8"&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>&lt;!-- </span><span class="s2">新增房客表單</span><span class="s1"> --&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>&lt;div class="bg-white p-6 rounded-2xl shadow-sm border border-gray-100 mb-8"&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                </span>&lt;h3 class="text-base font-semibold mb-4 flex items-center gap-2"&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                    </span>&lt;i class="fa-solid fa-user-plus text-gray-400"&gt;&lt;/i&gt; </span><span class="s2">新增</span><span class="s1"> / </span><span class="s2">編輯房客週租記錄</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                </span>&lt;/h3&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                </span>&lt;input type="hidden" id="edit-id"&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                </span>&lt;div class="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-6 gap-4"&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                    </span>&lt;div&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                        </span>&lt;label class="block text-xs font-medium text-gray-500 mb-1"&gt;</span><span class="s2">租客姓名</span><span class="s1">&lt;/label&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                        </span>&lt;input type="text" id="tenant-name" class="w-full px-3 py-2 border border-gray-200 rounded-xl focus:outline-none focus:border-gray-900" placeholder="</span><span class="s2">名字</span><span class="s1">"&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                    </span>&lt;/div&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                    </span>&lt;div&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                        </span>&lt;label class="block text-xs font-medium text-gray-500 mb-1"&gt;</span><span class="s2">每週租金</span><span class="s1">&lt;/label&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                        </span>&lt;input type="number" id="weekly-rent" class="w-full px-3 py-2 border border-gray-200 rounded-xl focus:outline-none focus:border-gray-900" placeholder="$"&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                    </span>&lt;/div&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                    </span>&lt;div&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                        </span>&lt;label class="block text-xs font-medium text-gray-500 mb-1"&gt;</span><span class="s2">入住日期</span><span class="s1">&lt;/label&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                        </span>&lt;input type="date" id="move-in-date" class="w-full px-3 py-2 border border-gray-200 rounded-xl focus:outline-none focus:border-gray-900"&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                    </span>&lt;/div&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                    </span>&lt;div&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                        </span>&lt;label class="block text-xs font-medium text-gray-500 mb-1"&gt;</span><span class="s2">本次繳費日期</span><span class="s1">&lt;/label&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                        </span>&lt;input type="date" id="due-date" class="w-full px-3 py-2 border border-gray-200 rounded-xl focus:outline-none focus:border-gray-900"&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                    </span>&lt;/div&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                    </span>&lt;div&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                        </span>&lt;label class="block text-xs font-medium text-gray-500 mb-1"&gt;</span><span class="s2">繳納狀態</span><span class="s1">&lt;/label&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                        </span>&lt;select id="payment-status" class="w-full px-3 py-2 border border-gray-200 rounded-xl focus:outline-none focus:border-gray-900 bg-white"&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                            </span>&lt;option value="</span><span class="s2">未繳</span><span class="s1">"&gt;</span><span class="s2">未繳</span><span class="s1">&lt;/option&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                            </span>&lt;option value="</span><span class="s2">已繳</span><span class="s1">"&gt;</span><span class="s2">已繳</span><span class="s1">&lt;/option&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                        </span>&lt;/select&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                    </span>&lt;/div&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                    </span>&lt;div&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                        </span>&lt;label class="block text-xs font-medium text-gray-500 mb-1"&gt;</span><span class="s2">備註說明</span><span class="s1">&lt;/label&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                        </span>&lt;input type="text" id="remark" class="w-full px-3 py-2 border border-gray-200 rounded-xl focus:outline-none focus:border-gray-900" placeholder="</span><span class="s2">可不填</span><span class="s1">"&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                    </span>&lt;/div&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                </span>&lt;/div&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                </span>&lt;div class="mt-4 flex justify-end gap-2"&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                    </span>&lt;button onclick="clearForm()" id="cancel-btn" class="hidden px-4 py-2 text-sm font-medium text-gray-500 hover:text-gray-900 transition"&gt;</span><span class="s2">取消編輯</span><span class="s1">&lt;/button&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                    </span>&lt;button onclick="saveTenant()" id="save-btn" class="bg-gray-950 text-white px-5 py-2 rounded-xl text-sm font-medium hover:bg-gray-800 transition"&gt;</span><span class="s2">儲存資料</span><span class="s1">&lt;/button&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                </span>&lt;/div&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>&lt;/div&gt;</span></p>
+<p class="p1"><span class="s1"><br>
+</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>&lt;!-- </span><span class="s2">列表清單</span><span class="s1"> --&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>&lt;div class="bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden"&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                </span>&lt;div class="overflow-x-auto"&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                    </span>&lt;table class="w-full text-left border-collapse"&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                        </span>&lt;thead&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                            </span>&lt;tr class="bg-gray-50 border-b border-gray-100"&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                                </span>&lt;th class="p-4 text-xs font-semibold text-gray-400 uppercase tracking-wider"&gt;</span><span class="s2">租客</span><span class="s1">&lt;/th&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                                </span>&lt;th class="p-4 text-xs font-semibold text-gray-400 uppercase tracking-wider"&gt;</span><span class="s2">每週租金</span><span class="s1">&lt;/th&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                                </span>&lt;th class="p-4 text-xs font-semibold text-gray-400 uppercase tracking-wider"&gt;</span><span class="s2">入住日期</span><span class="s1">&lt;/th&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                                </span>&lt;th class="p-4 text-xs font-semibold text-gray-400 uppercase tracking-wider"&gt;</span><span class="s2">繳費截止日</span><span class="s1">&lt;/th&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                                </span>&lt;th class="p-4 text-xs font-semibold text-gray-400 uppercase tracking-wider"&gt;</span><span class="s2">狀態</span><span class="s1">&lt;/th&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                                </span>&lt;th class="p-4 text-xs font-semibold text-gray-400 uppercase tracking-wider"&gt;</span><span class="s2">備註</span><span class="s1">&lt;/th&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                                </span>&lt;th class="p-4 text-xs font-semibold text-gray-400 uppercase tracking-wider text-right"&gt;</span><span class="s2">操作</span><span class="s1">&lt;/th&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                            </span>&lt;/tr&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                        </span>&lt;/thead&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                        </span>&lt;tbody id="tenant-list" class="divide-y divide-gray-100"&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                            </span>&lt;!-- </span><span class="s2">資料動態載入</span><span class="s1"> --&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                        </span>&lt;/tbody&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                    </span>&lt;/table&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                </span>&lt;/div&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>&lt;/div&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>&lt;/main&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>&lt;/div&gt;</span></p>
+<p class="p1"><span class="s1"><br>
+</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>&lt;!-- </span><span class="s2">載入</span><span class="s1"> Firebase </span><span class="s2">核心與</span><span class="s1"> Firestore SDK (v9 </span><span class="s2">模組化版本</span><span class="s1">) --&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>&lt;script type="module"&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>import { initializeApp } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-app.js";</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>import { getFirestore, collection, addDoc, getDocs, updateDoc, deleteDoc, doc, onSnapshot } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore.js";</span></p>
+<p class="p1"><span class="s1"><br>
+</span></p>
+<p class="p2"><span class="s3"><span class="Apple-converted-space">        </span></span><span class="s4">const</span><span class="s1"> firebaseConfig = {</span></p>
+<p class="p3"><span class="s5">  apiKey: </span><span class="s1">"AIzaSyDeP9DNQ66vSIxSfobvszadV-pRkT1pSoc"</span><span class="s5">,</span></p>
+<p class="p3"><span class="s5">  authDomain: </span><span class="s1">"samuel-st-rent.firebaseapp.com"</span><span class="s5">,</span></p>
+<p class="p3"><span class="s5">  projectId: </span><span class="s1">"samuel-st-rent"</span><span class="s5">,</span></p>
+<p class="p3"><span class="s5">  storageBucket: </span><span class="s1">"samuel-st-rent.firebasestorage.app"</span><span class="s5">,</span></p>
+<p class="p2"><span class="s1">  messagingSenderId: </span><span class="s6">"794096659826"</span><span class="s1">,</span></p>
+<p class="p3"><span class="s5">  appId: </span><span class="s1">"1:794096659826:web:d99d862c67c94ce56f41eb"</span><span class="s5">,</span></p>
+<p class="p2"><span class="s1">  measurementId: </span><span class="s6">"G-XCH2ZH980C"</span></p>
+<p class="p2"><span class="s1">};</span></p>
+<p class="p4"><span class="s1"></span><br></p>
+<p class="p1"><span class="s1"><br>
+</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>// </span><span class="s2">初始化</span><span class="s1"> Firebase</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>const app = initializeApp(firebaseConfig);</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>const db = getFirestore(app);</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>const tenantsCollection = collection(db, "tenants");</span></p>
+<p class="p1"><span class="s1"><br>
+</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>// </span><span class="s2">全局綁定函數讓</span><span class="s1"> HTML </span><span class="s2">的</span><span class="s1"> onclick </span><span class="s2">可以觸發</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>window.saveTenant = saveTenant;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>window.deleteTenant = deleteTenant;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>window.editTenant = editTenant;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>window.clearForm = clearForm;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>window.checkPassword = checkPassword;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>window.logout = logout;</span></p>
+<p class="p1"><span class="s1"><br>
+</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>// </span><span class="s2">檢查密碼</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>function checkPassword() {</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>const pwd = document.getElementById('password-input').value;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>if(pwd === '0814') {</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                </span>localStorage.setItem('rent_auth', 'true');</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                </span>showApp();</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>} else {</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                </span>document.getElementById('login-error').classList.remove('hidden');</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>}</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>}</span></p>
+<p class="p1"><span class="s1"><br>
+</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>function logout() {</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>localStorage.removeItem('rent_auth');</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>location.reload();</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>}</span></p>
+<p class="p1"><span class="s1"><br>
+</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>// </span><span class="s2">頁面載入檢查登入狀態</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>if(localStorage.getItem('rent_auth') === 'true') {</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>showApp();</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>}</span></p>
+<p class="p1"><span class="s1"><br>
+</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>function showApp() {</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>document.getElementById('login-screen').classList.add('hidden');</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>document.getElementById('main-app').classList.remove('hidden');</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>listenToData(); // </span><span class="s2">開始監聽資料庫</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>}</span></p>
+<p class="p1"><span class="s1"><br>
+</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>// </span><span class="s2">即時監聽資料庫變化</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>function listenToData() {</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>onSnapshot(tenantsCollection, (snapshot) =&gt; {</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                </span>const listData = [];</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                </span>snapshot.forEach((doc) =&gt; {</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                    </span>listData.push({ id: doc.id, ...doc.data() });</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                </span>});</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                </span>renderTable(listData);</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>});</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>}</span></p>
+<p class="p1"><span class="s1"><br>
+</span></p>
+<p class="p5"><span class="s7"><span class="Apple-converted-space">        </span>// </span><span class="s1">渲染表格與自動判斷「遲繳」</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>function renderTable(data) {</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>const tbody = document.getElementById('tenant-list');</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>tbody.innerHTML = '';</span></p>
+<p class="p4"><span class="s1"><span class="Apple-converted-space">            </span></span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>if(data.length === 0) {</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                </span>tbody.innerHTML = `&lt;tr&gt;&lt;td colspan="7" class="p-8 text-sm text-gray-400 text-center"&gt;</span><span class="s2">目前沒有記錄，請從上方新增。</span><span class="s1">&lt;/td&gt;&lt;/tr&gt;`;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                </span>return;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>}</span></p>
+<p class="p1"><span class="s1"><br>
+</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>const todayStr = new Date().toISOString().split('T')[0]; // </span><span class="s2">取得今天日期字串</span><span class="s1"> (YYYY-MM-DD)</span></p>
+<p class="p1"><span class="s1"><br>
+</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>data.forEach(item =&gt; {</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                </span>let statusBadge = '';</span></p>
+<p class="p4"><span class="s1"><span class="Apple-converted-space">                </span></span></p>
+<p class="p5"><span class="s7"><span class="Apple-converted-space">                </span>// </span><span class="s1">核心邏輯：如果狀態是未繳，且今天大於繳費日期，自動判定為遲繳</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                </span>if (item.status === '</span><span class="s2">已繳</span><span class="s1">') {</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                    </span>statusBadge = `&lt;span class="inline-flex items-center gap-1 px-2.5 py-1 text-xs font-medium bg-emerald-50 text-emerald-700 rounded-md"&gt;&lt;span class="w-1.5 h-1.5 rounded-full bg-emerald-500"&gt;&lt;/span&gt;</span><span class="s2">已繳</span><span class="s1">&lt;/span&gt;`;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                </span>} else if (item.status === '</span><span class="s2">未繳</span><span class="s1">' &amp;&amp; todayStr &gt; item.dueDate) {</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                    </span>statusBadge = `&lt;span class="inline-flex items-center gap-1 px-2.5 py-1 text-xs font-medium bg-rose-50 text-rose-700 rounded-md animate-pulse"&gt;&lt;span class="w-1.5 h-1.5 rounded-full bg-rose-500"&gt;&lt;/span&gt;</span><span class="s2">遲繳</span><span class="s1"> </span><span class="s8">⚠️</span><span class="s1">&lt;/span&gt;`;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                </span>} else {</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                    </span>statusBadge = `&lt;span class="inline-flex items-center gap-1 px-2.5 py-1 text-xs font-medium bg-amber-50 text-amber-700 rounded-md"&gt;&lt;span class="w-1.5 h-1.5 rounded-full bg-amber-500"&gt;&lt;/span&gt;</span><span class="s2">未繳</span><span class="s1">&lt;/span&gt;`;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                </span>}</span></p>
+<p class="p1"><span class="s1"><br>
+</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                </span>tbody.innerHTML += `</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                    </span>&lt;tr class="hover:bg-gray-50/50 transition"&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                        </span>&lt;td class="p-4 text-sm font-semibold text-gray-900"&gt;${item.name}&lt;/td&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                        </span>&lt;td class="p-4 text-sm text-gray-600"&gt;$${Number(item.weeklyRent).toLocaleString()}&lt;/td&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                        </span>&lt;td class="p-4 text-sm text-gray-500"&gt;${item.moveInDate || '-'}&lt;/td&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                        </span>&lt;td class="p-4 text-sm font-medium text-gray-700"&gt;${item.dueDate}&lt;/td&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                        </span>&lt;td class="p-4 text-sm"&gt;${statusBadge}&lt;/td&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                        </span>&lt;td class="p-4 text-sm text-gray-400 max-w-xs truncate" title="${item.remark || ''}"&gt;${item.remark || '-'}&lt;/td&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                        </span>&lt;td class="p-4 text-sm text-right space-x-2"&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                            </span>&lt;button onclick="editTenant('${item.id}', '${item.name}', '${item.weeklyRent}', '${item.moveInDate}', '${item.dueDate}', '${item.status}', '${item.remark || ''}')" class="text-gray-400 hover:text-gray-900 transition"&gt;&lt;i class="fa-regular fa-pen-to-square"&gt;&lt;/i&gt;&lt;/button&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                            </span>&lt;button onclick="deleteTenant('${item.id}')" class="text-gray-400 hover:text-rose-600 transition"&gt;&lt;i class="fa-regular fa-trash-can"&gt;&lt;/i&gt;&lt;/button&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                        </span>&lt;/td&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                    </span>&lt;/tr&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                </span>`;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>});</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>}</span></p>
+<p class="p1"><span class="s1"><br>
+</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>// </span><span class="s2">新增或更新資料</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>async function saveTenant() {</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>const id = document.getElementById('edit-id').value;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>const name = document.getElementById('tenant-name').value.trim();</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>const weeklyRent = document.getElementById('weekly-rent').value;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>const moveInDate = document.getElementById('move-in-date').value;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>const dueDate = document.getElementById('due-date').value;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>const status = document.getElementById('payment-status').value;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>const remark = document.getElementById('remark').value.trim();</span></p>
+<p class="p1"><span class="s1"><br>
+</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>if(!name || !weeklyRent || !dueDate) {</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                </span>alert('</span><span class="s2">請填寫姓名、週租金與繳費日期！</span><span class="s1">');</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                </span>return;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>}</span></p>
+<p class="p1"><span class="s1"><br>
+</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>const data = { name, weeklyRent, moveInDate, dueDate, status, remark };</span></p>
+<p class="p1"><span class="s1"><br>
+</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>try {</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                </span>if(id) {</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                    </span>// </span><span class="s2">更新舊資料</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                    </span>const docRef = doc(db, "tenants", id);</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                    </span>await updateDoc(docRef, data);</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                </span>} else {</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                    </span>// </span><span class="s2">新增資料</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                    </span>await addDoc(tenantsCollection, data);</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                </span>}</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                </span>clearForm();</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>} catch (error) {</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                </span>alert("</span><span class="s2">儲存失敗</span><span class="s1">: " + error.message);</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>}</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>}</span></p>
+<p class="p1"><span class="s1"><br>
+</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>// </span><span class="s2">刪除資料</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>async function deleteTenant(id) {</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>if(confirm('</span><span class="s2">確定要刪除這筆記錄嗎？</span><span class="s1">')) {</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                </span>await deleteDoc(doc(db, "tenants", id));</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>}</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>}</span></p>
+<p class="p1"><span class="s1"><br>
+</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>// </span><span class="s2">帶入編輯資料</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>function editTenant(id, name, rent, moveIn, due, status, remark) {</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>document.getElementById('edit-id').value = id;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>document.getElementById('tenant-name').value = name;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>document.getElementById('weekly-rent').value = rent;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>document.getElementById('move-in-date').value = moveIn === 'undefined' ? '' : moveIn;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>document.getElementById('due-date').value = due;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>document.getElementById('payment-status').value = status;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>document.getElementById('remark').value = remark === 'undefined' ? '' : remark;</span></p>
+<p class="p1"><span class="s1"><br>
+</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>document.getElementById('save-btn').innerText = "</span><span class="s2">更新資料</span><span class="s1">";</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>document.getElementById('cancel-btn').classList.remove('hidden');</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>}</span></p>
+<p class="p1"><span class="s1"><br>
+</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>// </span><span class="s2">清空表單</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>function clearForm() {</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>document.getElementById('edit-id').value = '';</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>document.getElementById('tenant-name').value = '';</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>document.getElementById('weekly-rent').value = '';</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>document.getElementById('move-in-date').value = '';</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>document.getElementById('due-date').value = '';</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>document.getElementById('payment-status').value = '</span><span class="s2">未繳</span><span class="s1">';</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>document.getElementById('remark').value = '';</span></p>
+<p class="p1"><span class="s1"><br>
+</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>document.getElementById('save-btn').innerText = "</span><span class="s2">儲存資料</span><span class="s1">";</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>document.getElementById('cancel-btn').classList.add('hidden');</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>}</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>&lt;/script&gt;</span></p>
+<p class="p1"><span class="s1">&lt;/body&gt;</span></p>
+<p class="p1"><span class="s1">&lt;/html&gt;</span></p>
+</body>
+</html>
